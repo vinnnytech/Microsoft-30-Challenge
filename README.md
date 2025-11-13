@@ -35,6 +35,9 @@ By the end of this challenge, I will have practical experience with:
 
 ### Tools Used
 
+<img width="566" height="487" alt="image" src="https://github.com/user-attachments/assets/a4d97d7b-b6ee-4099-9db1-cfb4b54e6b38" />
+
+
 
 
 
