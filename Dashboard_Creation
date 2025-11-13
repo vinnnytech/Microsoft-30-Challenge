@@ -1,0 +1,9 @@
+This KQL shows a filtered and organized view of:
+	• all Windows Security  l logon was attempted using explicit credentials (from the last 30 days) that have:
+	• A non-empty Activity_s (what happened),
+	• A non-empty Account_s (who did it),
+	• And shows which computer it happened on — including timestamps and raw event data for deeper inspection.
+
+
+
+	
