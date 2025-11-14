@@ -1,6 +1,6 @@
 # Micrsoft 30 Day Challenge Mini Project # 2 
 
-### PHISHING ATTACK SIMULATION 
+### PHISHING ATTACK WALKTHROUGH
 
 📄 Table of Contents
 
@@ -40,7 +40,7 @@ Then go through the prompts below:
 <img width="955" height="274" alt="image" src="https://github.com/user-attachments/assets/617a754a-1fc5-46e8-b9da-9c3823e45441" />
 
 
-I test the policy by sending a an email to a user in my domain to see if the Safe LINK policy was impllemented :
+### I test the policy by sending a an email to a user in my domain to see if the Safe LINK policy was impllemented :
 
 <img width="1888" height="477" alt="image" src="https://github.com/user-attachments/assets/8ced313f-88e4-48ef-af66-d861f32e5759" />
 
@@ -78,9 +78,9 @@ IF there was something malicous with this link, I would navigate to the " TAKE A
 <img width="1454" height="420" alt="image" src="https://github.com/user-attachments/assets/a07055cc-2bdc-4807-af4f-c5df7423ede7" />
 
 
-📝 SOC Phishing Investigation Report
+# 📝 SOC Phishing Investigation Report
 
-Findings 
+#### Findings 
    Time: 2024-11/14 17:40 UTC 
    
    Host: N/A
@@ -96,7 +96,8 @@ Findings
    SHA256 Hash: N/a
 
 
-Investigation
+#### Investigation
+
 A suspicious email was sent from cybersmoke312@gmail.com to bob@mydfir1.onmicrosoft.com, using the subject line “Urgent Payroll Update – Action Required Today” to create a false sense of urgency. Although the message passed SPF, DKIM, DMARC, and Composite Authentication, these checks only confirm the email came from a legitimate Gmail server—not that it is safe. The sender is using a free Gmail account rather than an official payroll or corporate domain, which is a common red flag in phishing campaigns. Combined with the payroll-themed lure and the email’s origin from a Google mail server (mail-oi1-x231.google.com), the message shows strong indicators of phishing intent even though no direct malware is visible in the header.
 
 WHO – SENDER IP 2001:4860:4864:20::2b
@@ -110,7 +111,8 @@ WHERE: The malicious URL was sent to cybersmoke312@gmail.com
 WHY: The intent behind was for the attacker to trick the victim to download malware, steal credentials, or establish remote access — all without needing an EXE file that antivirus would catch
 
 HOW: IF the link was clicked on, the user would be redirected to a fake secure payroll site and the sign into his account. The credential would be captured by the attacker
-Recommendations 
+
+#### Recommendations 
 1) Contain the user by ensuring that their password is changed and IF not set up MFA.
 2) Run KQL to see if the signing were outside of normal hours and if they were signed in from another country.
 3) Although domains are relatively easy to change for an attacker, consider placing these domains in a blocklist to prevent additional compromise.
