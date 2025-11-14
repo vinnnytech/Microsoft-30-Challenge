@@ -1,10 +1,21 @@
 # Micrsoft 30 Day Challenge Mini Project # 2 
 
-Simulate a suspicious email, then walk through how a SOC analyst would investigate and respond.
-Table of Contents:
-1. Set up SAFE LINK Policy
-2. Investigation
-3. Report
+### PHISHING ATTACK SIMULATION 
+
+📄 Table of Contents
+
+1.Simulated Suspicious Email
+A crafted phishing-style email scenario used to demonstrate SOC investigation steps.
+
+2.SOC Analyst Investigation Workflow
+A full walkthrough of how a SOC analyst analyzes email headers, URLs, authentication results, and user activity to determine the threat level.
+
+3.Safe Links Policy Configuration
+Step-by-step instructions on how to configure Microsoft Defender Safe Links to protect users from malicious URLs in emails, Teams, and Office applications.
+
+4.Incident Report Summary
+A formal report documenting findings, indicators, timeline, root cause, and remediation steps taken during the simulated phishing investigation.
+
 
 ### Set up SAFE LINK Policy
 
@@ -17,14 +28,20 @@ Navigate to Email & Collaboration > Policies & Rules > Threat Policies > Safe Li
 Then go through the prompts below:
 
 <img width="1119" height="228" alt="image" src="https://github.com/user-attachments/assets/75b71ae2-ea0e-46ee-bb49-69e2cadb9264" />
+
 <img width="1073" height="345" alt="image" src="https://github.com/user-attachments/assets/a3476a07-b13f-40bd-925c-233e040a2ea2" />
+
 <img width="1045" height="629" alt="image" src="https://github.com/user-attachments/assets/5610118a-aa92-4b3c-9fb8-4c7c52de9241" />
+
 <img width="843" height="328" alt="image" src="https://github.com/user-attachments/assets/3e8a44df-0901-497c-82e2-7bba9b073449" />
+
 <img width="753" height="561" alt="image" src="https://github.com/user-attachments/assets/4e0f7d51-a189-4c38-a5e4-cdca6383e8d4" />
+
 <img width="955" height="274" alt="image" src="https://github.com/user-attachments/assets/617a754a-1fc5-46e8-b9da-9c3823e45441" />
 
 
 I test the policy by sending a an email to a user in my domain to see if the Safe LINK policy was impllemented :
+
 <img width="1888" height="477" alt="image" src="https://github.com/user-attachments/assets/8ced313f-88e4-48ef-af66-d861f32e5759" />
 
 
@@ -33,7 +50,8 @@ I test the policy by sending a an email to a user in my domain to see if the Saf
 
 ## Investigation
 
-To invetigate the alert in Microsoft Defender naviated to :
+To investigate the alert in Microsoft Defender naviated to :
+
    - Emails & Collaboration
    - Explorer
 
@@ -60,172 +78,43 @@ IF there was something malicous with this link, I would navigate to the " TAKE A
 <img width="1454" height="420" alt="image" src="https://github.com/user-attachments/assets/a07055cc-2bdc-4807-af4f-c5df7423ede7" />
 
 
-
-
-
-
-
-
-
----
-
-
-
-
-
-
-
-
-
-
-
-
-Absolutely — I can write a full professional SOC incident report using the template you provided, based only on the email headers you shared.
-
-Below is a clean, realistic, investigation-ready report.
-
 📝 SOC Phishing Investigation Report
 
-Case: Suspicious Email — “Urgent Payroll Update – Action Required Today”
-Date Investigated: Nov 14, 2025
-Analyst: [Vinny]
+Findings 
+   Time: 2024-11/14 17:40 UTC 
+   
+   Host: N/A
+   
+   IOC Domain: N/A
+   
+   IOC IP: N/A
+   
+   Possible Malware Family:N/A
+   
+   Filename: malicious powershell.exe
+   
+   SHA256 Hash: N/a
 
-1. Findings (What did you find?)
 
-A suspicious email was sent from cybersmoke312@gmail.com
- to bob@mydfir1.onmicrosoft.com
-.
+Investigation
+A suspicious email was sent from cybersmoke312@gmail.com to bob@mydfir1.onmicrosoft.com, using the subject line “Urgent Payroll Update – Action Required Today” to create a false sense of urgency. Although the message passed SPF, DKIM, DMARC, and Composite Authentication, these checks only confirm the email came from a legitimate Gmail server—not that it is safe. The sender is using a free Gmail account rather than an official payroll or corporate domain, which is a common red flag in phishing campaigns. Combined with the payroll-themed lure and the email’s origin from a Google mail server (mail-oi1-x231.google.com), the message shows strong indicators of phishing intent even though no direct malware is visible in the header.
 
-Subject attempts to create urgency: “Urgent Payroll Update – Action Required Today”
+WHO – SENDER IP 2001:4860:4864:20::2b
 
-Email passed SPF, DKIM, DMARC, and Composite Authentication — but this DOES NOT guarantee safety.
+WHAT – Received a malicious URL link https://secure-payroll-update.example.com/update_token.ps1  
 
-Sender domain is free Gmail, not a corporate payroll domain.
+WHEN: Based on the investigation, the link was sent on 2024-11/14 17:40 UTC
 
-Message references payroll updates, which is a common phishing lure.
+WHERE: The malicious URL was sent to cybersmoke312@gmail.com
 
-Email originated from a Google mail server (mail-oi1-x231.google.com).
+WHY: The intent behind was for the attacker to trick the victim to download malware, steal credentials, or establish remote access — all without needing an EXE file that antivirus would catch
 
-No explicit malware found in the header, but strong indicators of phishing intent.
+HOW: IF the link was clicked on, the user would be redirected to a fake secure payroll site and the sign into his account. The credential would be captured by the attacker
+Recommendations 
+1) Contain the user by ensuring that their password is changed and IF not set up MFA.
+2) Run KQL to see if the signing were outside of normal hours and if they were signed in from another country.
+3) Although domains are relatively easy to change for an attacker, consider placing these domains in a blocklist to prevent additional compromise.
 
-2. Investigation Summary (What happened?)
 
-A suspicious email claiming urgent payroll action was delivered to a user within the organization. Although the email passed technical authentication checks (SPF, DKIM, DMARC), further analysis shows that the sender uses a free Gmail account and impersonates a payroll-related communication. This is consistent with credential-harvesting phishing campaigns that rely on social engineering rather than spoofing domains.
 
-The email was flagged for investigation due to its subject line, inconsistencies in the sender identity, and unusual reply pattern. No malicious attachment was included, but the theme of “urgent payroll update” is strongly aligned with phishing attempts.
 
-3. Who, What, When, Where, Why, How
-Who – Who was involved?
-
-Sender: “Cyber Smoke” cybersmoke312@gmail.com
-
-Recipient: bob@mydfir1.onmicrosoft.com
-
-Infrastructure: Google SMTP servers → Microsoft 365 mail protection → Organization mail server
-
-What – What happened?
-
-A suspicious email impersonating payroll communications was sent to an employee. The email attempts to create urgency and may have included a phishing link (body not provided).
-
-When – When did this occur and is it still happening?
-
-Email sent: Fri, Nov 14, 2025, 12:40 PM EST
-
-Email processed through Microsoft transport at: 17:40 UTC
-
-Appears to be a single email; no evidence of ongoing attempts.
-
-Where – Where in the environment did this happen?
-
-Delivered to the user’s Microsoft 365 mailbox.
-
-Processed by Microsoft Exchange Online Protection (EOP).
-
-Routed through multiple Outlook data centers before final delivery.
-
-Why – Why did this happen? (If known)
-
-Likely part of a phishing campaign targeting users with payroll-themed lures.
-
-Attackers often use Gmail accounts to bypass domain reputation filters.
-
-Urgency in subject line suggests attempt to prompt the user to click a link.
-
-How – How did this happen?
-
-Email arrived legitimately through Gmail’s SMTP server (not spoofed).
-
-SPF, DKIM, and DMARC all passed because Gmail’s signature is valid.
-
-The attacker did not spoof the organization’s domain — instead they used social engineering.
-
-Email slipped past Microsoft spam filters due to:
-
-Clean domain reputation
-
-Proper authentication
-
-Lack of obvious malware
-
-4. Recommendations (What steps should be taken?)
-User Protection
-
-Contact user to confirm:
-
-Did they click any link?
-
-Did they enter credentials?
-
-Did they download anything?
-
-If the user clicked the link:
-
-Reset password immediately
-
-Invalidate all session tokens in Entra ID
-
-Review sign-ins for:
-
-Impossible travel
-
-Token replay
-
-Suspicious IPs
-
-Email & Domain Mitigation
-
-Block sender: cybersmoke312@gmail.com
-
-Block domain: gmail.com? (No — only block sender, NOT entire domain)
-
-Add exact phishing indicators to:
-
-URL blocklists
-
-Safe Links custom block
-
-M365 Defender advanced hunting
-
-Threat Hunting
-
-Run hunts for users who received or interacted with similar emails:
-
-EmailEvents
-| where SenderMailFromDomain == "gmail.com"
-| where Subject contains "Payroll" or Subject contains "Urgent"
-
-
-Search for URL clicks:
-
-EmailUrlInfo
-| where Url clicked contains domain from phishing email
-
-Enhancement Recommendations
-
-Enable M365 Advanced Phishing Protection (if not enabled)
-
-Enable Safe Links real-time URL scanning
-
-Improve user training on payroll scams
-
-Add detection rules for payroll-themed social engineering attempts
